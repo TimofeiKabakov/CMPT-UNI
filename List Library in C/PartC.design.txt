@@ -1,0 +1,33 @@
+In this exercise, we need to create a library that defines and manages such data structures as Lists and Nodes.
+Lists are required to have several methods for manipulation with their nodes and pointers.
+Our library must define the lists to be of a homogenous data type, since there is no possible way to know what data types.
+The memory for lists and nodes must be allocated statically at the stage of compilation and the size of the static memory
+block will depend on the maximum number of lists (which will be defined in the list.h file).
+Same applies to nodes: the static memory block will depend on the maximum number of nodes we allow in our library.
+The list itself is going to by a doubly linked list because pointers to the preceding nodes are going to be necessary for
+the implenmentation of functions like ListPrev(), ListRemove(), or ListTrim().
+
+The data structure for a Node will consist of 4 fields:
+    item: pointer to the value we want to store in the node
+    nextNode: pointeer to the next node in the list
+    prevNode: pointer to the previous node in the list
+    index: index of the list in the global array of lists
+
+The data structure for a List will consist of 5 fields:
+    length: number of nodes in the list
+    current: pointer to the current node in the list
+    head: pointer to the first node in the list
+    tail: pointer to the last node in the list
+    index: index of the node in the global array of nodes
+
+The maximum number of nodes and lists is goind to be 1024 and 100, respectively.
+We will also need to define types for function pointers for ListFree() and ListSearch().
+In regards to the implementation of the traversal of the created lists and nodes by the user, we are going to use a statically allocated
+array of pointers to lists. Initially, this array will consist of all zeros. So it will be easy to identify if there is a place to
+create more lists. For nodes, the data structure is going to be exacly the same: a statically allocated array of pointers to nodes.
+
+We are also going to implement 2 structures similar to stack that will keep track of the free positions in
+the global arrays of lists and nodes. Both of them will have an associated variable (list_idx, node_idx)
+that point to a last position in these arrays that store the index that is occupied
+in the appropriate global array. Everything on the right will store positions
+that are free to use, everything on the left - occupied positions.

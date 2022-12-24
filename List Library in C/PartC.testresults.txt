@@ -1,0 +1,37 @@
+This are the test cases for ListAdd():
+Head of the list is : 100, expected: 100
+Curent item of the list is : 100, expected: 100
+Tail of the list is : 100, expected: 100
+Head of the list is : 100, expected: 100
+Curent item of the list is : 35, expected: 35
+Tail of the list is : 35, expected: 35
+The prev node of the current node is  7, expected: 7
+
+This are the test cases for ListInsert():
+Head of the list is : 100, expected: 100
+Curent item of the list is : 100, expected: 100
+Tail of the list is : 100, expected: 100
+Head of the list is : 35, expected: 35
+Curent item of the list is : 35, expected: 35
+Tail of the list is : 100, expected: 100
+The next node of the current node is  : 7, expected: 7
+
+This are the test cases for ListAppend():
+Curent item of the list is : 27, expected: 27
+Tail of the list is : 27, expected: 27
+The prev node of the current node is  : 35, expected: 35
+
+This are the test cases for ListPrepend():
+Curent item of the list is : 92, expected: 92
+Head of the list is : 92, expected: 92
+Tail of the list is : 27, expected: 27
+The next node of the current node is  : 100, expected: 100
+
+This are additional test cases for ListAdd() and ListInsert()
+Curent item of the list is : 59, expected: 59
+The next node of the current node is  : 100, expected: 100
+The prev node of the current node is  : 92, expected: 92
+Curent item of the list is : 0, expected: 0
+Head of the list is : 92, expected: 92
+The next node of the current node is  : 59, expected: 59
+The prev node of the current node is  : 92, expected: 92

@@ -1,0 +1,100 @@
+ListCreate()
+- test creating a list when the array of lists is empty
+- test creating a list when the array of lists is full.
+
+ListCount()
+- test when the list has no items in it
+- test when the list has a moderate amount of items in it
+- test when the list is full
+
+ListFirst()
+- test when the list has no item (should return NULL pointer)
+- test when the list only has one item
+- test when the list has multiple items in it.
+
+ListLast() 
+- test when the list has no item (should return NULL poimter)
+- test when the list only has one item
+- test when the list has multiple items in it.
+
+ListNext()
+- test when the current item is the tail of the list.
+- test when the current item is anywhere else in the list.
+- test when the list has no items in it.
+
+ListPrev()
+- test when the current item is the head of the list.
+- test when the current item is anywhere else in the list.
+- test when the list has no items in it.
+
+ListCurr()
+- test when the list has no items in it
+- test when the current item is the head of the list
+- test when the current item is the tail of the list
+- test when the current item is anywhere else in the list
+
+ListAdd()
+- test adding an item when the curent item is the head of the list
+- test adding an item when the current item points to a node at the middle of the list (neither the head nor the tail)
+- test adding an item when the current item points is the tail of the list.
+- test that the previousNode of the new item points to what used to be current item
+- test that the nextNode of the new item points to the node that was after the former current item.
+- test that the new item is now the current item.
+
+ListInsert()
+- test adding an item when the list has no nodes in it.
+- test that the next node of the new node points to the previous current node
+- test that the previousNode points to what used to be the current item's previousNode.
+- test that the new item is now the current item.
+
+ListAppend() 
+- test adding an item when the list has no items in it.
+- test adding an item when the current node is the tail node.
+- test adding an item when the current node is not the tail node.
+- test that the previousNode of the new item points to what used to be the tail of the list.
+- test that the nextNode of the new item is NULL.
+- - test that the new item is now the tail of the list.
+- test that the new item is now the current item.
+
+ListPrepend()
+- test adding a new item when the list has no items in it.
+- test adding a new item when the current node is the head node.
+- test adding a new item when the current node is not the head node.
+- test that the previousNode of the new item is NULL
+- test that the nextNode of the new item is what used to be the head of the list.
+- test that the new item is now the head of the list.
+- test that the new item is now the current item.
+
+ListRemove()
+- test when the list has no items in list
+- test when there's only one item in the list
+- test the return value of list count after removing the item
+- test that the current item is placed on the next node after
+- test that prevNode and nextNode point to the right items after removing
+- test when the current item is the head of the list
+- test when the current item is the tail of the list
+- check the return value of the function (should be the item removed)
+
+ListConcat()
+- test when both lists have no items in them
+- test when only one list is empty
+- test when both lists are not empty
+- check the current item value (should be the current item of what was in list1)
+- check that list2 no longer exists
+
+ListFree()
+- test when the list to be deleted is the only list in LISTS
+- test when item to be freed does not exist.
+
+ListTrim()
+- test when there's only one item in list
+- test when there's no item in the list
+- test that prevNode and nextNode pointers are updated to the right items.
+- test that the current item is now the new last item
+
+ListSearch()
+- test when the item does not exist in the list
+- test when the item is at the end of the list
+- test when the item is at some place after the current pointer
+- test when the item is before the current pointer in the list
+- test the positon of the current item after the search in the 4 cases above
