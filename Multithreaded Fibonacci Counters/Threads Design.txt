@@ -1,0 +1,43 @@
+In this exercise, we are creating a program that starts M child threads 
+from a main thread each calculating the Fibonacci sequence for N numbers.
+
+When a child thread is created, it's task is to call a Fib() function 
+located in a separate .c file Fib.c for all numbers starting 
+from 0 to N (which is provided by the user in the command line).
+
+Fib() function takes an integer as parameter. It is basically a recursive 
+algorithm with two base cases for when the integer is equal to zero or one, and 
+the recursive algorithm returns the sum of the fib of the last two integers.
+
+Next, We would create an array of counters called number_of_invocations.
+It would store the number of times Fib() was called for each thread.
+The size of this array would be the maximum number of threads defined in 
+the program. We will set it to 20 in this case. 
+
+Upon the exit, each thread would print its elapsed time in milliseconds, 
+and its corresponding value in the array of counters.
+
+For windows threads and posix threads:
+    Global integer variable named keepRunning would serve as an indicator 
+    for child threads to stop running when it is set to 0. When keepRunning
+    is set to 0 by the main thread after "sleeping", we still need to 
+    "busy wait"
+    for child threads to finish what they were doing: stop calling Fib(),
+    print 
+    results and exit. If we disregard busy waiting, threads would not have 
+    time to print anything because the main thread would terminate itself 
+    right away (terminating it's children as a consequence).
+
+Sleeping time provided by the user is assumed to be in seconds.
+
+IdThreadArray array will map id's of the threads assigned by the system 
+(which might be extremely large) to appropriate array indices
+(starting from 0 to MAX_THREADS). We will iterate over this array prior 
+to incrementing the counter for a scpecific thread to find its right index 
+in the number_of_invocations array. We are going to do that 
+with the help of a new function named threadArrayIndex.
+
+A function checkIfNumber is going to check if all provided argument
+are numbers.
+
+

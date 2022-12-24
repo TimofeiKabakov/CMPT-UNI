@@ -1,0 +1,18 @@
+Test Plan:
+- Check for the right number of arguments.
+- Check for invalid input:
+    1) check if all arguments are numbers (each position),
+    2) check if Fibonacci number is within right boundaries: from 0 to 200,
+    3) check if the number of threads exceeds 
+the maximum number of threads allowed.
+- Check if output of the program - the number of Fib() calls in each 
+thread - is correct (manually):
+    1) When fibMax = 5, the number of Fib() invokations has to be 33
+    2) When fibMax = 4, the number of Fib() invokations has to be 18
+    3) When fibMax = 1, the number of Fib() invokations has to be 1
+- Check for the output when 
+children don't have enough time to calculate all the 
+Fib numbers 
+(the number of invokations will most probably be different for each 
+thread, since they did not have a chance to finish execution fully and were
+terminated before)

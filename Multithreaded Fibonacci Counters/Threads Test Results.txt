@@ -1,0 +1,81 @@
+CASE 1:
+    INPUT:
+        3 2 1
+        3 3 4
+        3 3 5
+        4 5 20
+        21 2 2
+        7 1 201
+        some 1 2
+        1 some 3
+        1 2 some
+        4 2 50
+
+    EXPECTED OUTPUT (for each line):
+        1) # of Fib() calls is 1
+        2) # of Fib() calls is 18
+        3) # of Fib() calls is 33
+        4) # of Fib() calls is 57290
+        5) invalid argument error
+        6) invalid argument error
+        7) invalid argument error
+        8) invalid argument error
+        9) invalid argument error
+        10) threads are terminated
+
+
+    OUTPUT PART windows threads:
+        Thread ran for 0 milliseconds and invoked Fib() 1 times
+        times
+        times
+        t times
+        t times
+        read ran for 0Thread ran for 0 milliseconds and invoked Fib() 18 times
+        Thread ran for 0 milliseconds and invoked Fib() 33 times
+        milliseconds and invoked Fib() 33 times
+        Fib() 33 times
+        an for 0 milliseconds and invoked Fib() 33 times
+        Thread ran for Thread ran for 16 milliseconds and invoked Fib()  milliseconds and invoked Fib() 57289 times
+        times
+        Thread ran for 16 milliseconds and invoked Fib() 57288 times
+        Thread ran for 16 milliseconds and invoked Fib() 57284 times
+        Invalid argument: the number of threads can not exceed the maximum number of threads allowed, which is 20
+        Invalid argument: third Fibonacci number argument has to be between 0 and 200
+        Error: incorrect arguments in input file, must be positive integers!
+        Error: incorrect arguments in input file, must be positive integers!
+        Error: incorrect arguments in input file, must be positive integers!
+        Thread was terminated. It ran for 563 milliseconds and invoked Fib() 18454791 times
+        Thread was terminated. It ran for 547 milliseconds and invoked Fib() 18454777 times
+        Thread was terminated. It ran for 516 milliseconds and invoked Fib() 18454756 times
+        Thread was terminated. It ran for 500 milliseconds and invoked Fib() 18454670 times
+
+    exiting threads
+
+    OUTPUT Posix Threads:
+        Thread ran for 0 milliseconds and invoked Fib() 1 times
+        Thread ran for 0 milliseconds and invoked Fib() 1 times
+        Thread ran for 0 milliseconds and invoked Fib() 1 times
+        Thread ran for 0 milliseconds and invoked Fib() 18 times
+        Thread ran for 0 milliseconds and invoked Fib() 18 times
+        Thread ran for 0 milliseconds and invoked Fib() 18 times
+        Thread ran for 0 milliseconds and invoked Fib() 33 times
+        Thread ran for 0 milliseconds and invoked Fib() 33 times
+        Thread ran for 0 milliseconds and invoked Fib() 33 times
+        Thread ran for 8 milliseconds and invoked Fib() 57289 times
+        Thread ran for 8 milliseconds and invoked Fib() 57288 times
+        Thread ran for 8 milliseconds and invoked Fib() 57288 times
+        Thread ran for 9 milliseconds and invoked Fib() 57290 times
+        Invalid argument: exceeded the maximum number of threads
+        Invalid argument: third Fibonacci number argument has to be between 0 and 200
+        Error: incorrect arguments in input file, must be positive integers!
+        Error: incorrect arguments in input file, must be positive integers!
+        Error: incorrect arguments in input file, must be positive integers!
+        Thread was terminated. It ran for 2357 milliseconds and invoked Fib() 18454875 times
+        Thread was terminated. It ran for 2818 milliseconds and invoked Fib() 11405391 times
+        Thread was terminated. It ran for 3014 milliseconds and invoked Fib() 18454882 times
+        Thread was terminated. It ran for 3032 milliseconds and invoked Fib() 18454892 times
+
+
+
+
+
