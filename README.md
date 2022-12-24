@@ -13,8 +13,8 @@
 
   Parameters to provide to run the program:
   1. number of child threads to launch
-  2. 2. the time these threads should run for
-  3. 3. the maximum integer
+  2. the time these threads should run for
+  3. the maximum integer
 
   If the time occurs before child threads are done calculating the Fibonacci sequence, they are signalled to exit.
 
