@@ -1,3 +1,5 @@
+/*Test program to test the list library*/
+
 #include <stdio.h>
 #include "list.h"
 #include <stdlib.h>
