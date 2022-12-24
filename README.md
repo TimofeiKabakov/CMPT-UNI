@@ -12,9 +12,9 @@
   Launch multiple threads that perform the same function in parallel until a deadline without synchronization between the threads. 
 
   Parameters to provide to run the program:
-    1. number of child threads to launch
-    2. the time these threads should run for
-    3. the maximum integer
+  1. number of child threads to launch
+  2. 2. the time these threads should run for
+  3. 3. the maximum integer
 
   If the time occurs before child threads are done calculating the Fibonacci sequence, they are signalled to exit.
 
@@ -22,7 +22,7 @@
   
   **To run the program:**
   1. run "make" in the command prompt.
-  2. 2. create a .txt file where on each line, you indicate the input for one execution of the program.
+  2. create a .txt file where on each line, you indicate the input for one execution of the program.
   3. run "./bh.bash <winThreads/posixThreads> < <path-to-the-txt-input-file>". If you are on Windows, indicate "winThreads." If on Linux, indicate "posixThreads." The bash script will run the appropriate executable with an input read line by line from the .txt file you created.
 
   Refer to the design document for more information and detail.
