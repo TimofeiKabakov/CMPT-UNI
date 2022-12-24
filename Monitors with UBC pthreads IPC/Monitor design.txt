@@ -1,0 +1,123 @@
+We are going to use UBC pthreads for this problem
+
+We will have to create a server thread 
+handling all the Monitor responsibilities in order to 
+control the critical section. We will operate with this 
+server and clients using Send()/Receive()/Reply() 
+interprocess communication primitives provided by UBC pthreads. 
+Send() system calls will be invoked in the following functions 
+located in Monitor.c file:
+
+    MonServer(numConds):   
+        - Responsible for allocating memory for the 'numConds' 
+        Condition Variable Queues (in case of reader-writer program, those
+        2 condition variables are 'OKtoWrite' and 'OKtoRead'). 
+        List cvLists will store pointers to 'numConds' queues for
+        appropriate conditional variables.
+
+        - Initializes enter queue and urgent queue for the Monitor
+
+        - Responsible for creating a server thread that
+        listens to all the requests and controls the 
+        critical section access
+    
+    MonEnter():
+        - sends a "MonEnter" message/request to the server thread 
+        with the help of Send() function.
+
+    MonLeave():
+        - sends a "MonLeave" message/request to the server thread 
+        with the help of Send() function.
+
+    MonWait():
+        - sends a "MonWait" message/request to the server thread 
+        with the help of Send() function. Also passes the index
+        of the Conditional Variable we want to wait for as the length
+        parameter in Send() function. I decided to do it this way since
+        we don't use len parameter either way.
+
+    MonSignal():
+        - sends a "MonSignal" message/request to the server thread 
+        with the help of Send() function. Also passes the index
+        of the Conditional Variable we want to signal as the length
+        parameter in Send() function. I decided to do it this way 
+        since we don't use len parameter either way.
+
+    Server's PID will be statically allocated (but not visible in the h file)
+    so that we can refer to it in our Send() function.
+
+    serverFunct():
+        This function is designated fot the server thread.
+        It will have an infinite for loop inside which we will constantly
+        wait for the incoming requests from either MonEnter(), MonLeave(),
+        MonWait(), ot MonSignal().
+
+        Once we receive a request, we identify which operation it belongs to
+        by simply comparing the received message to all possibilities:
+
+            - If the MonEnter() sent the request:
+                Check if the monitor is already occupied by referring to a
+                global variable monOccupied. If it is occupied,
+                put the PID of the calling thread to the 
+                enterQList (enter queue).
+                Do not reply to the calling thread in this case, 
+                sice we want it to stop executing because the monitor 
+                is occupied by some other thread.
+            
+                If monitor does not have any threads executing inside,
+                set monOccupied to true and Reply to the calling thread 
+                so thatit continues executing.
+
+            - If the MonLeave() sent the request:
+                Reply to the calling thread so that it continues executing.
+                We dont need to block it in any way since it leaves 
+                the monitor.
+
+                If there is any thread in the urgentQList (urgent queue), 
+                remove it from there and resume/unblock it by replying.
+
+                If there is any thread in the enterQList (enter queue),
+                remove it from there and resume/unblock it by replying.
+
+                If both urgentQList and enterQList are empty, 
+                there is nothing for 
+                a Monitor to execute --> set the global 
+                variable monOccupied to false.
+
+            - If the MonWait() sent the request:
+                Get the index of the Conditional Variable 
+                from the "length parameter"
+                Allocate mempry for the PID of the calling thread
+                Add this PID to the queue for the appropriate 
+                Conditional Varaible (identified by the passed CV index)
+
+                Do not reaply to the Calling Thread since we want it 
+                to wait for the passed CV
+
+                If there is any thread in the urgentQList (urgent queue),
+                remove it from there and resume/unblock it by replying.
+
+                If there is any thread in the enterQList (enter queue), 
+                remove it from there and resume/unblock it by replying.
+
+                If both urgentQList and enterQList are empty, 
+                there is nothing for a Monitor to execute -->
+                set the global variable monOccupied to false.
+
+            - If the MonSignal() sent the request:
+                Get the index of the Conditional Variable 
+                from the "length parameter"
+                Check if the queue fot that CV is empty:
+
+                If not, it means that
+                there are actually some threads waiting 
+                for that CV --> remove the first one of them from 
+                the appropriate CV queue and Reply to it.
+                It will let that thread in the Monitor. 
+                After that, add the calling 
+                thread to the urgentQList.
+
+                If it's empty, Reply to the calling thread so that it
+                continues execution.
+
+
