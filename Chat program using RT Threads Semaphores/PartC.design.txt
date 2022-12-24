@@ -1,0 +1,151 @@
+Design for chat program:
+
+We will create 4 threads using RTThreads as per
+the assignment specs. Below we will outline roughly
+how they will function with their respective functions:
+
+Thread Functions:
+
+	keyInputFunct:
+
+		This thread will read the input that user provides from the console.
+
+		use fcntl() to make it non-blocking, so that
+		it does not block other threads while running 
+
+		Every time we get a piece of input, we add it to the
+		list named "sendMessage" and then RttV() the semaphore 
+		"sendMessageSem" to tell the senderFunct to grab it and send it
+		to the machine on the other side.
+
+		We also need to wrap the logic in the paragrapgh above 
+		with a mutex to avoid producer/consumer problem when 
+		senderFunct wants to access sendMessage list at the 
+		same time with keyInputFunct (sendMessage list is a critical section)
+
+		Also it is very important to make sure that we allocate new 
+		memory for the messages we add to sendMessage list 
+		(since we add pointers to char arrays). If we don't allocate 
+		new memory, pointers added before will
+		get replaced at the newer iterations if we add a
+		pointer to the buffer to sendMessage list.
+
+		One more thing to remember - put the 
+		thread to sleep in case when we call
+		read() and there is no input (read() 
+		would return -1 in that case). It will
+		allow CPU to switch to other threads and execute their logic.
+		
+	senderFunct:
+		This will be the thread to send a udp datagram using
+		the port numbers given by the user.
+
+		We will use unconnected datagrams here, so no need to connect()
+
+		First of all, we need to set up a socket (we don't need to bind it
+		since it will be used for server purposes). 
+		We will use getaddrinfo()
+		function to get the information about the second user's machine.
+		Then I will initiate a socket with that information and indicate it 
+		in sendto() function. 
+
+		When this thread is RttV()ed in sendMessageSem by the keyboardinput 
+		thread, it will grab the inputted 
+		string from the queue and then send it.
+
+		We also need to wrap the logic in the paragrapgh above 
+		with a mutex to avoid producer/consumer problem when 
+		keyInputFunct wants to access sendMessage list at the 
+		same time with senderFunct (sendMessage list is a critical section)
+
+		There is no need to put this thread to sleep ar any time because
+		it's code will only be executed when sendMessageSem gets signalled by
+		the keyInputFunct thread (i.e. when there is something to send in the
+		sendMessage list)
+		
+	printFunct:
+		This thread will print everything there is at the point of time
+		in the printQueue list. printQueue list will contain incoming message
+		that come from the second user.
+
+		We will protect the logic regarding getting message out of the queue
+		with the mutex because printQueue 
+		will be a critical section in this case.
+		Why? receiverFunct might want to access printQueue at the same time 
+		with printFunct() and put elements there. We want to avoid it.
+
+		There is no need to put this thread to sleep as well since
+		it will get blocked by printQueueSem which tells us iif there
+		is anything to print in general. If there is, the thread will run.
+		Otherwise, block and let other threads execute.
+
+	receiverFunct:
+		This thread is going to receive messages from the second 
+		user with the help of recvfrom() function. We use 
+		recvfrom() because when using unconnected datagrams, we
+		dont need to use combination of accept() and recv().
+
+		Prior to receiving, we nned to set up a local socket and bind it
+		to a local port. This will be implemented in the separate function
+		called setUpSocket() just to make it easier to read.
+
+		Every time we receive a new message, allocate new mempry for it
+		with malloc and add a pointer to the message to printQueue list.
+
+		We will protect the logic above with mutexReceive 
+		mutex because printQueue will be a critical section in this case.
+		Why? printFunct thread might want to access printQueue at the same time
+		with receiverFunct thread to print elements 
+		from printQueue. We want to avoid it.
+
+		Signal printQueueSem semaphore after receiving the 
+		message and putting it into the queue
+		to tell the printing thread that there is
+		 something to print in the queue.
+		
+		We will put this thread to sleep for a short period of time 
+		when there is nothing to receive. It will allow other threads execute.
+
+	Mainp:
+
+		Check the correctness of the input.
+
+		Create two queues:
+			- printQueue for messages that will come from 
+			receiverFunct thread. printFunct thread will take 
+			elements out of this queue.
+			- sendMessage for messages to send. They will be
+			added to this list in keyInputFunct thread and consumed
+			in senderFunct thread.
+		
+		Initialize semaphores and mutexes for queues above
+
+		For thread creation, we will use
+		RttCreate(&Ridx, threadxFunct, stacksize,
+		name(probably something to do with the thread's number
+		and function), pointer to our argument, priority, and RTTUSR)
+
+		Stack size will be one fourth of the
+		stack size on the normal linux shell
+		
+		netSendThread will accept the port number of the second
+		user as an argument
+
+		receiverFunctThread will accept the local port number as
+		an argument
+		
+		Priority of each thread should be the same, we think. 
+		
+		we use RTTUSR because the documentation says 
+		that's best for application threads
+
+
+	
+
+	
+	
+	
+
+	
+	
+	

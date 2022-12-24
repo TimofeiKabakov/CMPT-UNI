@@ -1,0 +1,34 @@
+Test Cases:
+    Test s-chat program on different architectures:
+
+    1) Testing on tux:
+
+        Machine 1 output:
+
+        $ ./s-chat 30066 tux7 30044
+        This is s-chat
+        first message
+        second message on machine 1
+        third message on machine 1
+        fourth message on machine 2
+        fifth message on machine 2
+
+        sixth message on machine 1
+        seventh message on machine 1
+        eigth message on machine 2
+
+
+        Machine 2 output:
+        
+        $ ./s-chat 30044 tux7 30066
+        This is s-chat
+        first message
+        second message on machine 1
+        third message on machine 1
+
+        fourth message on machine 2
+        fifth message on machine 2
+        sixth message on machine 1
+
+        seventh message on machine 1
+        eigth message on machine 2
